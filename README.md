@@ -1,3 +1,3 @@
-# brojac_glasova
+# survey_results_counter
 
-A new Flutter project.
+project for school
