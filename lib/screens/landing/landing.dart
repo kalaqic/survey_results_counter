@@ -3,31 +3,77 @@ import 'package:brojac_glasova/theme.dart';
 import 'package:brojac_glasova/components/survey_question_item.dart';
 
 class LandingScreen extends StatefulWidget {
-  const LandingScreen({super.key});
+  const LandingScreen({Key? key}) : super(key: key);
 
   @override
   State<LandingScreen> createState() => _LandingScreenState();
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  List<Map<String, dynamic>> surveyQuestions = [
-    {
-      'question': 'Da li znate sta je vejp?',
-      'yes': 0,
-      'no': 0,
-      'notSure': 0,
-    },
-    {
-      'question': 'Da li ste ikad konzumirali vejp?',
-      'yes': 0,
-      'no': 0,
-      'notSure': 0,
-    },
-  ];
+  final TextEditingController _noviTekstController = TextEditingController();
+
+  List<Map<String, dynamic>> surveyQuestions = [];
+
+  void dodajNovoPitanjeSaStringom(String novoPitanje) {
+    setState(() {
+      surveyQuestions.add({
+        'question': novoPitanje,
+        'yes': 0,
+        'no': 0,
+        'notSure': 0,
+      });
+    });
+  }
+
+  void _prikaziUnosTekstaPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Unesite novo pitanje'),
+          content: TextField(
+            controller: _noviTekstController,
+            decoration: const InputDecoration(hintText: 'Unesite pitanje'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Otkaži'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (_noviTekstController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: CustomTheme.orange,
+                      content: const Text('Morate uneti pitanje.'),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                } else {
+                  dodajNovoPitanjeSaStringom(_noviTekstController.text);
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Dodaj'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _prikaziUnosTekstaPopup();
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -48,17 +94,23 @@ class _LandingScreenState extends State<LandingScreen> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: surveyQuestions.length,
-                itemBuilder: (context, index) {
-                  return SurveyQuestionItem(
-                    yes: surveyQuestions[index]['yes'] as int,
-                    no: surveyQuestions[index]['no'] as int,
-                    notSure: surveyQuestions[index]['notSure'] as int,
-                    question: surveyQuestions[index]['question'] as String,
-                  );
-                },
-              ),
+              child: surveyQuestions.isEmpty
+                  ? Text(
+                      'KLIKNI PLUS DA DODAS PITANJA',
+                      style: CustomTheme.titleTextStyle(),
+                    )
+                  : ListView.builder(
+                      itemCount: surveyQuestions.length,
+                      itemBuilder: (context, index) {
+                        return SurveyQuestionItem(
+                          yes: surveyQuestions[index]['yes'] as int,
+                          no: surveyQuestions[index]['no'] as int,
+                          notSure: surveyQuestions[index]['notSure'] as int,
+                          question:
+                              surveyQuestions[index]['question'] as String,
+                        );
+                      },
+                    ),
             ),
           ),
         ],
