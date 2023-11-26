@@ -10,14 +10,14 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  final TextEditingController _noviTekstController = TextEditingController();
+  final TextEditingController newTextController = TextEditingController();
 
   List<Map<String, dynamic>> surveyQuestions = [];
 
-  void dodajNovoPitanjeSaStringom(String novoPitanje) {
+  void addNewQuestion(String newQuestion) {
     setState(() {
       surveyQuestions.add({
-        'question': novoPitanje,
+        'question': newQuestion,
         'yes': 0,
         'no': 0,
         'notSure': 0,
@@ -25,14 +25,14 @@ class _LandingScreenState extends State<LandingScreen> {
     });
   }
 
-  void _prikaziUnosTekstaPopup() {
+  void enterYourQuestionPopUp() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Unesite novo pitanje'),
           content: TextField(
-            controller: _noviTekstController,
+            controller: newTextController,
             decoration: const InputDecoration(hintText: 'Unesite pitanje'),
           ),
           actions: <Widget>[
@@ -44,7 +44,7 @@ class _LandingScreenState extends State<LandingScreen> {
             ),
             TextButton(
               onPressed: () {
-                if (_noviTekstController.text.isEmpty) {
+                if (newTextController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       backgroundColor: CustomTheme.orange,
@@ -53,7 +53,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   );
                 } else {
-                  dodajNovoPitanjeSaStringom(_noviTekstController.text);
+                  addNewQuestion(newTextController.text);
                   Navigator.of(context).pop();
                 }
               },
@@ -70,7 +70,7 @@ class _LandingScreenState extends State<LandingScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _prikaziUnosTekstaPopup();
+          enterYourQuestionPopUp();
         },
         child: const Icon(Icons.add),
       ),
