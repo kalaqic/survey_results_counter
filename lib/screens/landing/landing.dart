@@ -30,25 +30,50 @@ class _LandingScreenState extends State<LandingScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Unesite novo pitanje'),
+          backgroundColor: CustomTheme.darkerBlue,
+          title: Text(
+            'Unesite novo pitanje:',
+            style: CustomTheme.titleTextStyle(fontSize: 18),
+          ),
           content: TextField(
+            style: TextStyle(
+              color: CustomTheme.white,
+            ),
             controller: newTextController,
-            decoration: const InputDecoration(hintText: 'Unesite pitanje'),
+            decoration: InputDecoration(
+                hintText: 'Unesite pitanje',
+                hintStyle: TextStyle(
+                  color: CustomTheme.white,
+                )),
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Otkaži'),
+              child: Text(
+                'otkazi',
+                style: CustomTheme.titleTextStyle(
+                  color: CustomTheme.red,
+                  fontSize: 17,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
-                if (newTextController.text.isEmpty) {
+                if (newTextController.text.startsWith(' ') ||
+                    newTextController.text.isEmpty ||
+                    newTextController.text.endsWith(' ')) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      backgroundColor: CustomTheme.orange,
-                      content: const Text('Morate uneti pitanje.'),
+                      backgroundColor: CustomTheme.darkerBlue,
+                      content: Text(
+                        'Pitanje nije odgovarajuce!',
+                        style: CustomTheme.titleTextStyle(
+                          color: CustomTheme.red,
+                          fontSize: 20,
+                        ),
+                      ),
                       duration: const Duration(seconds: 2),
                     ),
                   );
@@ -57,7 +82,13 @@ class _LandingScreenState extends State<LandingScreen> {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Dodaj'),
+              child: Text(
+                'DODAJ',
+                style: CustomTheme.titleTextStyle(
+                  color: CustomTheme.green,
+                  fontSize: 20,
+                ),
+              ),
             ),
           ],
         );
@@ -69,6 +100,7 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomTheme.darkerBlue,
         onPressed: () {
           enterYourQuestionPopUp();
         },
@@ -95,9 +127,17 @@ class _LandingScreenState extends State<LandingScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: surveyQuestions.isEmpty
-                  ? Text(
-                      'KLIKNI PLUS DA DODAS PITANJA',
-                      style: CustomTheme.titleTextStyle(),
+                  ? Column(
+                      children: [
+                        Text(
+                          'KLIKNI PLUS DA DODAS PITANJA',
+                          style: CustomTheme.titleTextStyle(),
+                        ),
+                        Text(
+                          'ILI INFO DUGME ZA INFO',
+                          style: CustomTheme.titleTextStyle(),
+                        ),
+                      ],
                     )
                   : ListView.builder(
                       itemCount: surveyQuestions.length,
