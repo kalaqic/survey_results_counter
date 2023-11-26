@@ -3,24 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AnswerAdderNo extends StatefulWidget {
-  const AnswerAdderNo({super.key});
+  int no;
+
+  AnswerAdderNo({
+    Key? key,
+    required this.no,
+  }) : super(key: key);
 
   @override
   State<AnswerAdderNo> createState() => _AnswerAdderNoState();
 }
 
-int no = 0;
-
-void numberAdded() {
-  no = no + 1;
-}
-
-void numberReset() {
-  no = 0;
-}
-
-
 class _AnswerAdderNoState extends State<AnswerAdderNo> {
+  void numberAdded() {
+    setState(() {
+      widget.no = widget.no + 1;
+    });
+  }
+
+  void numberReset() {
+    setState(() {
+      widget.no = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,9 +47,7 @@ class _AnswerAdderNoState extends State<AnswerAdderNo> {
           ),
           InkWell(
             onTap: () {
-              setState(() {
-                numberAdded();
-              });
+              numberAdded();
             },
             child: SvgPicture.asset(
               'icons/plus_square.svg',
@@ -57,18 +61,16 @@ class _AnswerAdderNoState extends State<AnswerAdderNo> {
             ),
             child: Center(
               child: Text(
-                '$no',
+                '${widget.no}',
                 style: CustomTheme.titleTextStyle(),
               ),
             ),
           ),
-                    Padding(
+          Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                setState(() {
-                  numberReset();
-                });
+                numberReset();
               },
               child: Container(
                 decoration: BoxDecoration(

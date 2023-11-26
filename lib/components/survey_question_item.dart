@@ -6,7 +6,16 @@ import 'package:flutter/material.dart';
 
 class SurveyQuestionItem extends StatefulWidget {
   final String question;
-  const SurveyQuestionItem({required this.question, super.key});
+  int yes;
+  int no;
+  int notSure;
+  SurveyQuestionItem({
+    required this.notSure,
+    required this.no,
+    required this.yes,
+    required this.question,
+    super.key,
+  });
 
   @override
   State<SurveyQuestionItem> createState() => _SurveyQuestionItemState();
@@ -40,13 +49,18 @@ class _SurveyQuestionItemState extends State<SurveyQuestionItem> {
               thickness: 2,
               color: CustomTheme.white,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // TODO: odvojiti ove od onih u drugoj komponenti,
-                AnswerAdderYes(),
-                AnswerAdderNo(),
-                AnswerAdderNotSure(),
+                AnswerAdderYes(
+                  yes: widget.yes,
+                ),
+                AnswerAdderNo(
+                  no: widget.no,
+                ),
+                AnswerAdderNotSure(
+                  notSure: widget.notSure,
+                ),
               ],
             )
           ],

@@ -3,23 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AnswerAdderNotSure extends StatefulWidget {
-  const AnswerAdderNotSure({super.key});
+  int notSure;
+
+  AnswerAdderNotSure({
+    Key? key,
+    required this.notSure,
+  }) : super(key: key);
 
   @override
   State<AnswerAdderNotSure> createState() => _AnswerAdderNotSureState();
 }
 
-int notSure = 0;
-
-void numberAdded() {
-  notSure = notSure + 1;
-}
-
-void numberReset() {
-  notSure = 0;
-}
-
 class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
+  void numberAdded() {
+    setState(() {
+      widget.notSure = widget.notSure + 1;
+    });
+  }
+
+  void numberReset() {
+    setState(() {
+      widget.notSure = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,11 +47,7 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
           ),
           InkWell(
             onTap: () {
-              setState(
-                () {
-                  numberAdded();
-                },
-              );
+              numberAdded();
             },
             child: SvgPicture.asset(
               'icons/plus_square.svg',
@@ -58,7 +61,7 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
             ),
             child: Center(
               child: Text(
-                '$notSure',
+                '${widget.notSure}',
                 style: CustomTheme.titleTextStyle(),
               ),
             ),
@@ -67,9 +70,7 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
               onTap: () {
-                setState(() {
-                  numberReset();
-                });
+                numberReset();
               },
               child: Container(
                 decoration: BoxDecoration(
