@@ -3,13 +3,16 @@ import 'package:brojac_glasova/components/answer_adder_item/answer_adder_item_no
 import 'package:brojac_glasova/components/answer_adder_item/answer_adder_item_yes.dart';
 import 'package:brojac_glasova/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SurveyQuestionItem extends StatefulWidget {
   final String question;
-  int yes;
-  int no;
-  int notSure;
-  SurveyQuestionItem({
+  final int yes;
+  final int no;
+  final int notSure;
+  final Function() onDelete;
+  const SurveyQuestionItem({
+    required this.onDelete,
     required this.notSure,
     required this.no,
     required this.yes,
@@ -62,7 +65,20 @@ class _SurveyQuestionItemState extends State<SurveyQuestionItem> {
                   notSure: widget.notSure,
                 ),
               ],
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: GestureDetector(
+                onTap: widget.onDelete,
+                child: SvgPicture.asset(
+                  'icons/delete.svg',
+                  colorFilter: ColorFilter.mode(
+                    CustomTheme.white,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

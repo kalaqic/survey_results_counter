@@ -73,9 +73,7 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
                 numberReset();
               },
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: CustomTheme.orange),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: CustomTheme.orange),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
