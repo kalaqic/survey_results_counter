@@ -1,10 +1,9 @@
-import 'package:brojac_glasova/components/custom_pop_up.dart';
+import 'package:flutter/material.dart';
 import 'package:brojac_glasova/functions.dart';
 import 'package:brojac_glasova/spacing.dart';
-import 'package:flutter/material.dart';
 import 'package:brojac_glasova/theme.dart';
 import 'package:brojac_glasova/components/survey_question_item.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -17,29 +16,43 @@ class _LandingScreenState extends State<LandingScreen> {
   final TextEditingController newTextController = TextEditingController();
 
   List<Map<String, dynamic>> surveyQuestions = [];
+  bool isSpeedDialOpen = false;
   SurveyFunctions surveyFunctions = SurveyFunctions();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: SpeedDial(
+        onClose: () {
+          setState(() {
+            isSpeedDialOpen = false;
+          });
+        },
+        onOpen: () {
+          setState(() {
+            isSpeedDialOpen = true;
+          });
+        },
+        elevation: 5,
+        buttonSize: const Size(50, 50),
+        overlayColor: CustomTheme.darkerBlue,
+        backgroundColor: CustomTheme.orange,
+        activeBackgroundColor: CustomTheme.red,
+        icon: Icons.add,
+        activeIcon: Icons.close,
         children: [
-          FloatingActionButton(
-            backgroundColor: CustomTheme.darkerBlue,
-            onPressed: () {
-              Navigator.pushNamed(context, '/info');
-            },
-            heroTag: null,
-            child: Icon(
-              Icons.info,
-              color: CustomTheme.green,
+          SpeedDialChild(
+            label: 'Dodaj pitanje',
+            labelBackgroundColor: CustomTheme.greenBLue,
+            labelStyle: CustomTheme.titleTextStyle(
+              fontSize: 20,
+              color: CustomTheme.white,
             ),
-          ),
-          VerticalSpacing.XS(),
-          FloatingActionButton(
-            backgroundColor: CustomTheme.darkerBlue,
-            onPressed: () {
+            foregroundColor: Colors.black,
+            child: const Icon(
+              Icons.question_mark,
+            ),
+            onTap: () {
               surveyFunctions.enterYourQuestionPopUp(
                 context,
                 newTextController,
@@ -47,10 +60,22 @@ class _LandingScreenState extends State<LandingScreen> {
                 setState,
               );
             },
-            heroTag: null,
-            child: const Icon(
-              Icons.add,
+          ),
+          SpeedDialChild(
+            label: 'Info',
+            labelStyle: CustomTheme.titleTextStyle(
+              fontSize: 20,
+              color: Colors.black,
             ),
+            foregroundColor: CustomTheme.white,
+            backgroundColor: CustomTheme.greenBLue,
+            onLongPress: () {},
+            child: const Icon(
+              Icons.info,
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/info');
+            },
           ),
         ],
       ),
@@ -84,44 +109,20 @@ class _LandingScreenState extends State<LandingScreen> {
                             color: CustomTheme.grayBlue,
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'KLIKNI PLUS DA DODAS PITANJA',
-                              style: CustomTheme.titleTextStyle(
-                                color: CustomTheme.white,
+                        if (isSpeedDialOpen == false)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'KLIKNI PLUS ZA VISE OPCIJA',
+                                style: CustomTheme.titleTextStyle(
+                                  color: CustomTheme.white,
+                                ),
                               ),
-                            ),
-                            VerticalSpacing.XS(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ILI INFO ZA INFO O APK',
-                                  style: CustomTheme.titleTextStyle(
-                                    color: CustomTheme.white,
-                                  ),
-                                ),
-                                HorizontalSpacing.custom(40),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 6,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'icons/curve-arrow-down.svg',
-                                    colorFilter: ColorFilter.mode(
-                                      CustomTheme.white,
-                                      BlendMode.srcIn,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            VerticalSpacing.custom(170),
-                          ],
-                        ),
+                              VerticalSpacing.XS(),
+                              VerticalSpacing.custom(170),
+                            ],
+                          ),
                       ],
                     )
                   : ListView.builder(
