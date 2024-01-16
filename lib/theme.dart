@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTheme {
   static String primaryFont = 'LemonMilk';
+  static String secondaryFont = 'Aharoni';
   static Color white = Colors.white;
   static Color red = Colors.redAccent;
   static Color green = const Color.fromARGB(255, 15, 237, 67);
@@ -13,7 +14,7 @@ class CustomTheme {
   static TextStyle titleTextStyle(
       {double fontSize = 20, Color color = Colors.white}) {
     return TextStyle(
-      fontFamily: primaryFont,
+      fontFamily: secondaryFont,
       fontSize: fontSize,
       color: color,
     );

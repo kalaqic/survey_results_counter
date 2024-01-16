@@ -27,8 +27,12 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/info_images/
     - icons/
   fonts:
     - family: LemonMilk
       fonts:
         - asset: fonts/lemonmilk.ttf
+    - family: Aharoni
+      fonts:
+        - asset: fonts/aharoni.ttf

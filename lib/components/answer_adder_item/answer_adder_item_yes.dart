@@ -1,3 +1,4 @@
+import 'package:brojac_glasova/spacing.dart';
 import 'package:brojac_glasova/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,12 @@ class _AnswerAdderYesState extends State<AnswerAdderYes> {
   void numberAdded() {
     setState(() {
       widget.yes = widget.yes + 1;
+    });
+  }
+
+  void numberSubtract() {
+    setState(() {
+      widget.yes = widget.yes - 1;
     });
   }
 
@@ -45,13 +52,26 @@ class _AnswerAdderYesState extends State<AnswerAdderYes> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              numberAdded();
-            },
-            child: SvgPicture.asset(
-              'icons/plus_square.svg',
-            ),
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  numberAdded();
+                },
+                child: SvgPicture.asset(
+                  'icons/plus_square.svg',
+                ),
+              ),
+              HorizontalSpacing.S(),
+              InkWell(
+                onTap: () {
+                  numberSubtract();
+                },
+                child: SvgPicture.asset(
+                  'icons/minus_square.svg',
+                ),
+              ),
+            ],
           ),
           Container(
             height: 20,
@@ -75,9 +95,7 @@ class _AnswerAdderYesState extends State<AnswerAdderYes> {
                 numberReset();
               },
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: CustomTheme.orange),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: CustomTheme.orange),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
