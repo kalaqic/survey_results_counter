@@ -1,4 +1,5 @@
 import 'package:brojac_glasova/components/custom_pop_up.dart';
+import 'package:brojac_glasova/functions.dart';
 import 'package:brojac_glasova/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:brojac_glasova/theme.dart';
@@ -16,57 +17,7 @@ class _LandingScreenState extends State<LandingScreen> {
   final TextEditingController newTextController = TextEditingController();
 
   List<Map<String, dynamic>> surveyQuestions = [];
-
-  addNewQuestion(String newQuestion) {
-    setState(
-      () {
-        surveyQuestions.add(
-          {
-            'question': newQuestion,
-            'yes': 0,
-            'no': 0,
-            'notSure': 0,
-          },
-        );
-      },
-    );
-  }
-
-  void removeQuestion(String question) {
-    setState(() {
-      surveyQuestions.removeWhere((item) => item['question'] == question);
-    });
-  }
-
-  void enterYourQuestionPopUp() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CustomPopUp(
-          controller: newTextController,
-          onSave: () {
-            if (newTextController.text.isEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: CustomTheme.red,
-                  content: Text(
-                    'Pitanje nije odgovarajuce!',
-                    style: CustomTheme.titleTextStyle(
-                      color: CustomTheme.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                  duration: const Duration(seconds: 3),
-                ),
-              );
-            } else {
-              addNewQuestion(newTextController.text);
-            }
-          },
-        );
-      },
-    );
-  }
+  SurveyFunctions surveyFunctions = SurveyFunctions();
 
   @override
   Widget build(BuildContext context) {
@@ -80,15 +31,21 @@ class _LandingScreenState extends State<LandingScreen> {
               Navigator.pushNamed(context, '/info');
             },
             heroTag: null,
-            child: const Icon(
+            child: Icon(
               Icons.info,
+              color: CustomTheme.green,
             ),
           ),
           VerticalSpacing.XS(),
           FloatingActionButton(
             backgroundColor: CustomTheme.darkerBlue,
             onPressed: () {
-              enterYourQuestionPopUp();
+              surveyFunctions.enterYourQuestionPopUp(
+                context,
+                newTextController,
+                surveyQuestions,
+                setState,
+              );
             },
             heroTag: null,
             child: const Icon(
@@ -122,7 +79,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'nemas nikakvih pitanja',
+                          'NEMATE DOSTUPNIH PITANJA',
                           style: CustomTheme.titleTextStyle(
                             color: CustomTheme.grayBlue,
                           ),
@@ -132,7 +89,9 @@ class _LandingScreenState extends State<LandingScreen> {
                           children: [
                             Text(
                               'KLIKNI PLUS DA DODAS PITANJA',
-                              style: CustomTheme.titleTextStyle(),
+                              style: CustomTheme.titleTextStyle(
+                                color: CustomTheme.white,
+                              ),
                             ),
                             VerticalSpacing.XS(),
                             Row(
@@ -141,7 +100,9 @@ class _LandingScreenState extends State<LandingScreen> {
                               children: [
                                 Text(
                                   'ILI INFO ZA INFO O APK',
-                                  style: CustomTheme.titleTextStyle(),
+                                  style: CustomTheme.titleTextStyle(
+                                    color: CustomTheme.white,
+                                  ),
                                 ),
                                 HorizontalSpacing.custom(40),
                                 Padding(
@@ -168,7 +129,11 @@ class _LandingScreenState extends State<LandingScreen> {
                       itemBuilder: (context, index) {
                         return SurveyQuestionItem(
                           onDelete: () {
-                            removeQuestion(surveyQuestions[index]['question']);
+                            surveyFunctions.removeQuestion(
+                              surveyQuestions[index]['question'],
+                              surveyQuestions,
+                              setState,
+                            );
                           },
                           yes: surveyQuestions[index]['yes'] as int,
                           no: surveyQuestions[index]['no'] as int,

@@ -1,3 +1,4 @@
+import 'package:brojac_glasova/spacing.dart';
 import 'package:brojac_glasova/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,12 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
   void numberAdded() {
     setState(() {
       widget.notSure = widget.notSure + 1;
+    });
+  }
+
+  void numberSubtract() {
+    setState(() {
+      widget.notSure = widget.notSure - 1;
     });
   }
 
@@ -45,13 +52,26 @@ class _AnswerAdderNotSureState extends State<AnswerAdderNotSure> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              numberAdded();
-            },
-            child: SvgPicture.asset(
-              'icons/plus_square.svg',
-            ),
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  numberAdded();
+                },
+                child: SvgPicture.asset(
+                  'icons/plus_square.svg',
+                ),
+              ),
+              HorizontalSpacing.S(),
+              InkWell(
+                onTap: () {
+                  numberSubtract();
+                },
+                child: SvgPicture.asset(
+                  'icons/minus_square.svg',
+                ),
+              ),
+            ],
           ),
           Container(
             height: 20,

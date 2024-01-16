@@ -73,7 +73,7 @@ class CustomPopUp extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'otkazi',
+                      'Otkazi',
                       style: CustomTheme.titleTextStyle(
                         color: CustomTheme.red,
                         fontSize: 17,
@@ -89,69 +89,3 @@ class CustomPopUp extends StatelessWidget {
     );
   }
 }
-
-// AlertDialog(
-//           shape: Border.all(
-//             color: CustomTheme.white,
-//           ),
-//           backgroundColor: CustomTheme.darkerBlue,
-//           title: Text(
-//             'Unesite novo pitanje:',
-//             style: CustomTheme.titleTextStyle(fontSize: 18),
-//           ),
-//           content: TextField(
-//             style: TextStyle(
-//               color: CustomTheme.white,
-//             ),
-//             controller: newTextController,
-//             decoration: InputDecoration(
-//               hintText: 'Unesite pitanje',
-//               hintStyle: TextStyle(
-//                 color: CustomTheme.white,
-//               ),
-//             ),
-//           ),
-//           actions: <Widget>[
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text(
-//                 'otkazi',
-//                 style: CustomTheme.titleTextStyle(
-//                   color: CustomTheme.red,
-//                   fontSize: 17,
-//                 ),
-//               ),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 if (newTextController.text.startsWith(' ') || newTextController.text.isEmpty || newTextController.text.endsWith(' ')) {
-//                   ScaffoldMessenger.of(context).showSnackBar(
-//                     SnackBar(
-//                       backgroundColor: CustomTheme.red,
-//                       content: Text(
-//                         'Pitanje nije odgovarajuce!',
-//                         style: CustomTheme.titleTextStyle(
-//                           color: CustomTheme.white,
-//                           fontSize: 20,
-//                         ),
-//                       ),
-//                       duration: const Duration(seconds: 2),
-//                     ),
-//                   );
-//                 } else {
-//                   addNewQuestion(newTextController.text);
-//                   Navigator.of(context).pop();
-//                 }
-//               },
-//               child: Text(
-//                 'DODAJ',
-//                 style: CustomTheme.titleTextStyle(
-//                   color: CustomTheme.green,
-//                   fontSize: 20,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         );

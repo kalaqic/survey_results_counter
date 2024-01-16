@@ -33,7 +33,7 @@ class LoadingScreen extends StatelessWidget {
             Image.asset('images/logo.png'),
             VerticalSpacing.XXL(),
             Text(
-              'design/idea/coding:\nDavid Kalabic',
+              'design / idea / coding:\nDavid Kalabic',
               style: CustomTheme.titleTextStyle(),
             ),
           ],
