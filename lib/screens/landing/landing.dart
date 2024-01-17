@@ -16,28 +16,18 @@ class _LandingScreenState extends State<LandingScreen> {
   final TextEditingController newTextController = TextEditingController();
 
   List<Map<String, dynamic>> surveyQuestions = [];
-  bool isSpeedDialOpen = false;
   SurveyFunctions surveyFunctions = SurveyFunctions();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: SpeedDial(
-        onClose: () {
-          setState(() {
-            isSpeedDialOpen = false;
-          });
-        },
-        onOpen: () {
-          setState(() {
-            isSpeedDialOpen = true;
-          });
-        },
         elevation: 5,
         buttonSize: const Size(50, 50),
         overlayColor: CustomTheme.darkerBlue,
-        backgroundColor: CustomTheme.orange,
-        activeBackgroundColor: CustomTheme.red,
+        backgroundColor: Colors.black,
+        activeBackgroundColor: CustomTheme.greenBLue,
+        foregroundColor: CustomTheme.white,
         icon: Icons.add,
         activeIcon: Icons.close,
         children: [
@@ -77,6 +67,23 @@ class _LandingScreenState extends State<LandingScreen> {
               Navigator.pushNamed(context, '/info');
             },
           ),
+          SpeedDialChild(
+            label: 'Pokazi Grafikone',
+            labelStyle: CustomTheme.titleTextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+            labelBackgroundColor: CustomTheme.greenBLue,
+            foregroundColor: Colors.black,
+            backgroundColor: CustomTheme.white,
+            onLongPress: () {},
+            child: const Icon(
+              Icons.calculate,
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, '/info');
+            },
+          ),
         ],
       ),
       appBar: AppBar(
@@ -101,7 +108,7 @@ class _LandingScreenState extends State<LandingScreen> {
               padding: const EdgeInsets.all(8.0),
               child: surveyQuestions.isEmpty
                   ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'NEMATE DOSTUPNIH PITANJA',
@@ -109,20 +116,19 @@ class _LandingScreenState extends State<LandingScreen> {
                             color: CustomTheme.grayBlue,
                           ),
                         ),
-                        if (isSpeedDialOpen == false)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'KLIKNI PLUS ZA VISE OPCIJA',
-                                style: CustomTheme.titleTextStyle(
-                                  color: CustomTheme.white,
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'KLIKNI PLUS ZA VISE OPCIJA',
+                              style: CustomTheme.titleTextStyle(
+                                color: CustomTheme.white,
                               ),
-                              VerticalSpacing.XS(),
-                              VerticalSpacing.custom(170),
-                            ],
-                          ),
+                            ),
+                            VerticalSpacing.XS(),
+                            VerticalSpacing.custom(170),
+                          ],
+                        ),
                       ],
                     )
                   : ListView.builder(

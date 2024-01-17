@@ -1,6 +1,7 @@
 import 'package:brojac_glasova/components/answer_adder_item/answer_adder_item_no.dart';
 import 'package:brojac_glasova/components/answer_adder_item/answer_adder_item_not_sure.dart';
 import 'package:brojac_glasova/components/answer_adder_item/answer_adder_item_yes.dart';
+import 'package:brojac_glasova/spacing.dart';
 import 'package:brojac_glasova/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,20 +33,16 @@ class _SurveyQuestionItemState extends State<SurveyQuestionItem> {
       child: Container(
         decoration: BoxDecoration(
           color: CustomTheme.greenBLue,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: CustomTheme.white),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.question,
-                  style: CustomTheme.titleTextStyle(),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 14, bottom: 0),
+              child: Text(
+                widget.question,
+                style: CustomTheme.titleTextStyle(),
               ),
             ),
             Divider(
@@ -70,11 +67,24 @@ class _SurveyQuestionItemState extends State<SurveyQuestionItem> {
               padding: const EdgeInsets.all(20.0),
               child: GestureDetector(
                 onTap: widget.onDelete,
-                child: SvgPicture.asset(
-                  'icons/delete.svg',
-                  colorFilter: ColorFilter.mode(
-                    CustomTheme.white,
-                    BlendMode.srcIn,
+                child: Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: CustomTheme.red,
+                    border: Border.all(
+                      color: CustomTheme.white,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SvgPicture.asset(
+                      'icons/delete.svg',
+                      colorFilter: ColorFilter.mode(
+                        CustomTheme.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
                 ),
               ),

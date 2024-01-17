@@ -4,6 +4,7 @@ class CustomTheme {
   static String primaryFont = 'LemonMilk';
   static String secondaryFont = 'Aharoni';
   static Color white = Colors.white;
+  static Color black = Colors.black;
   static Color red = Colors.redAccent;
   static Color green = const Color.fromARGB(255, 15, 237, 67);
   static Color grayBlue = const Color(0xFFB0D7E2);

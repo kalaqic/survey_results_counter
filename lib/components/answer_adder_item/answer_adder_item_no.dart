@@ -24,7 +24,9 @@ class _AnswerAdderNoState extends State<AnswerAdderNo> {
 
   void numberSubtract() {
     setState(() {
-      widget.no = widget.no - 1;
+      if (widget.no > 0) {
+        widget.no = widget.no - 1;
+      }
     });
   }
 
@@ -38,73 +40,79 @@ class _AnswerAdderNoState extends State<AnswerAdderNo> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Container(
-            height: 20,
-            decoration: BoxDecoration(
-              color: CustomTheme.darkerBlue,
-            ),
-            child: Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomTheme.grayBlue,
+          border: Border.all(
+            color: CustomTheme.black,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'NE',
-                style: CustomTheme.titleTextStyle(),
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  numberAdded();
-                },
-                child: SvgPicture.asset(
-                  'icons/plus_square.svg',
+                style: CustomTheme.titleTextStyle(
+                  fontSize: 17,
                 ),
               ),
-              HorizontalSpacing.S(),
-              InkWell(
-                onTap: () {
-                  numberSubtract();
-                },
-                child: SvgPicture.asset(
-                  'icons/minus_square.svg',
+            ),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    numberAdded();
+                  },
+                  child: SvgPicture.asset(
+                    'icons/plus_square.svg',
+                  ),
+                ),
+                HorizontalSpacing.S(),
+                InkWell(
+                  onTap: () {
+                    numberSubtract();
+                  },
+                  child: SvgPicture.asset(
+                    'icons/minus_square.svg',
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 20,
+              width: 50,
+              decoration: BoxDecoration(
+                color: CustomTheme.darkerBlue,
+              ),
+              child: Center(
+                child: Text(
+                  '${widget.no}',
+                  style: CustomTheme.titleTextStyle(),
                 ),
               ),
-            ],
-          ),
-          Container(
-            height: 20,
-            width: 50,
-            decoration: BoxDecoration(
-              color: CustomTheme.darkerBlue,
             ),
-            child: Center(
-              child: Text(
-                '${widget.no}',
-                style: CustomTheme.titleTextStyle(),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () {
-                numberReset();
-              },
-              child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: CustomTheme.orange),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'RESET',
-                    style: CustomTheme.titleTextStyle(fontSize: 10),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  numberReset();
+                },
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: CustomTheme.orange),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'RESET',
+                      style: CustomTheme.titleTextStyle(fontSize: 10),
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
