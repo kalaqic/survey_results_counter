@@ -76,7 +76,6 @@ class _LandingScreenState extends State<LandingScreen> {
             labelBackgroundColor: CustomTheme.greenBLue,
             foregroundColor: Colors.black,
             backgroundColor: CustomTheme.white,
-            onLongPress: () {},
             child: const Icon(
               Icons.calculate,
             ),

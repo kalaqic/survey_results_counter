@@ -45,6 +45,19 @@ class SurveyFunctions {
               );
             } else {
               addNewQuestion(newTextController.text, surveyQuestions, newTextController, context, setState);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: CustomTheme.green,
+                  content: Text(
+                    'Dodali ste novo pitanje!',
+                    style: CustomTheme.titleTextStyle(
+                      color: CustomTheme.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
             }
           },
         );
